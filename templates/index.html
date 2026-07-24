@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Smart Expense Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FAF7F0;
+    --ink: #1B2A4A;
+    --stamp: #C9A227;
+    --gray: #6B6B6B;
+    --line: #DDD6C4;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 40px 20px;
+  }
+  .receipt {
+    max-width: 640px;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid var(--line);
+    box-shadow: 0 2px 20px rgba(27, 42, 74, 0.08);
+    padding: 40px 36px;
+  }
+  h1 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 22px;
+    margin: 0 0 4px 0;
+  }
+  .subtitle { color: var(--gray); font-size: 13px; margin-bottom: 24px; }
+  .tear { border: none; border-top: 2px dashed var(--line); margin: 28px 0; }
+  .total-row { display: flex; justify-content: space-between; align-items: baseline; font-family: 'IBM Plex Mono', monospace; }
+  .total-row .label { font-size: 14px; color: var(--gray); }
+  .total-row .value { font-size: 28px; font-weight: 600; }
+  .category-row { display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 14px; padding: 8px 0; border-bottom: 1px dotted var(--line); }
+  .stamp { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--stamp); border: 1.5px solid var(--stamp); padding: 2px 8px; border-radius: 3px; transform: rotate(-2deg); margin-top: 20px; }
+  #chat-box { margin-top: 12px; min-height: 40px; font-size: 14px; line-height: 1.6; white-space: pre-wrap; }
+  #question { width: 100%; padding: 10px 12px; font-family: 'Inter', sans-serif; font-size: 14px; border: 1px solid var(--line); border-radius: 4px; margin-top: 8px; }
+  #ask-btn { margin-top: 10px; background: var(--ink); color: #fff; border: none; padding: 10px 18px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; border-radius: 4px; cursor: pointer; }
+  #ask-btn:hover { opacity: 0.9; }
+</style>
+</head>
+<body>
+  <div class="receipt">
+    <h1>SMART EXPENSE INTELLIGENCE</h1>
+    <div class="subtitle">{{ summary.transaction_count }} transactions processed</div>
+
+    <div class="total-row">
+      <span class="label">TOTAL SPEND</span>
+      <span class="value">${{ "%.2f"|format(summary.total_spend) }}</span>
+    </div>
+
+    <hr class="tear">
+
+    <div>
+      {% for category, amount in summary.by_category.items() %}
+      <div class="category-row">
+        <span>{{ category }}</span>
+        <span>${{ "%.2f"|format(amount) }}</span>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="stamp">CLASSIFIED BY AI</div>
+
+    <hr class="tear">
+
+    <div>
+      <label for="question" style="font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--gray);">
+        ASK ABOUT YOUR SPENDING
+      </label>
+      <input id="question" type="text" placeholder="e.g. why did spending spike in 2018">
+      <button id="ask-btn" onclick="askQuestion()">Ask</button>
+      <div id="chat-box"></div>
+    </div>
+  </div>
+
+  <script>
+    async function askQuestion() {
+      const question = document.getElementById('question').value;
+      const box = document.getElementById('chat-box');
+      if (!question) return;
+      box.textContent = 'Thinking...';
+      try {
+        const res = await fetch('/ask', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question })
+        });
+        const data = await res.json();
+        box.textContent = data.answer;
+      } catch (err) {
+        box.textContent = 'Something went wrong.';
+      }
+    }
+  </script>
+</body>
+</html>
