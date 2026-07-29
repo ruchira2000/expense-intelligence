@@ -1,0 +1,13 @@
+pandas
+numpy
+torch
+torchvision
+pillow
+scikit-learn
+matplotlib
+seaborn
+flask
+pytesseract
+prophet
+google-genai
+python-dotenv
