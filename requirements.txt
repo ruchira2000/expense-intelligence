@@ -1,13 +1,5 @@
-pandas
-numpy
-torch
-torchvision
-pillow
-scikit-learn
-matplotlib
-seaborn
 flask
-pytesseract
-prophet
+pandas
 google-genai
 python-dotenv
+gunicorn
