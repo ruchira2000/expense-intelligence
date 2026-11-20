@@ -12,10 +12,11 @@ The chatbot is SQL-grounded Q&A, not vector search. The code computes the totals
 
 It is hosted on a free tier, so the first visit after a quiet spell can take about a minute to wake up.
 
+**[Try the live demo](https://expense-intelligence-vqjr.onrender.com)** (free hosting, so the first visit after a quiet spell takes about a minute)
 
 ## About the data
 
-The receipts come from the ICDAR 2019 SROIE scanned-receipt competition dataset. I could not confirm its licence terms, so the raw receipts, their annotations and my OCR output are not included in this repo. The live demo uses an anonymised copy of the transactions. To reproduce the pipeline, download the dataset from its original source.
+The receipts come from the ICDAR 2019 SROIE scanned-receipt competition dataset. I could not confirm its licence terms, so the raw receipts, their annotations and my OCR output are not included in this repo. The live demo uses an anonymised copy of the transactions.
 
 ## How it works
 
