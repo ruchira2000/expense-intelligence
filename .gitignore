@@ -5,3 +5,7 @@ venv/
 expenses.db
 data/receipts/*
 model/*.pth
+data/labels/*.txt
+data/labels/extracted_data.csv
+data/labels/transactions_export.csv
+.vscode/

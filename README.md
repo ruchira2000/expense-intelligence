@@ -4,6 +4,19 @@ From a photo of a receipt to a business insight, in one pipeline.
 
 This is an end to end project that takes scanned receipt images, classifies each one into an expense category using a trained image classifier, extracts vendor, date, and total using OCR, stores the results in a database, forecasts future spend, and lets you ask plain English questions about your spending through an AI chatbot grounded in the real data.
 
+## Live demo
+
+The live site is a dashboard and a spending chatbot over an **anonymised demo copy** of the data (vendor names replaced with "Vendor 001" and so on). The receipt classifier, OCR and forecasting ran offline to build the database. The live site shows their results, and it cannot classify a new receipt.
+
+The chatbot is SQL-grounded Q&A, not vector search. The code computes the totals, and a language model explains them in plain English. Each visitor is limited to 8 questions an hour and the demo stops at 300 a day to protect a free AI quota. The counters live in memory, so they reset whenever the free instance restarts, and the per-visitor limit is a courtesy, not a security feature.
+
+It is hosted on a free tier, so the first visit after a quiet spell can take about a minute to wake up.
+
+
+## About the data
+
+The receipts come from the ICDAR 2019 SROIE scanned-receipt competition dataset. I could not confirm its licence terms, so the raw receipts, their annotations and my OCR output are not included in this repo. The live demo uses an anonymised copy of the transactions. To reproduce the pipeline, download the dataset from its original source.
+
 ## How it works
 
 ```
@@ -73,6 +86,7 @@ Then open http://127.0.0.1:5000
 ## Honest notes on results
 
 This project prioritizes a real, working end to end pipeline over inflated metrics. The classifier and OCR results reflect the genuine challenges of a small, imbalanced, real world dataset, and the writeup documents the problems hit along the way (class imbalance, OCR misreads producing impossible dates, API rate limits) and how each was solved. See `PROJECT_WRITEUP.md` for the full story.
+
 
 ## Author
 
